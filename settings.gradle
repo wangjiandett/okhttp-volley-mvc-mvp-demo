@@ -1,0 +1,3 @@
+include ':app'
+include ':af-library'
+project(':af-library').projectDir = new File("E:\\git\\AFDemo", 'library')
