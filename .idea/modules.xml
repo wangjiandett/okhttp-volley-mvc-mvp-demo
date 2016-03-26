@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/OkHttp.iml" filepath="$PROJECT_DIR$/OkHttp.iml" />
       <module fileurl="file://E:/git/AFDemo/library/af-library.iml" filepath="E:/git/AFDemo/library/af-library.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/okhttp-volley-mvc-mvp-demo.iml" filepath="$PROJECT_DIR$/okhttp-volley-mvc-mvp-demo.iml" />
     </modules>
   </component>
 </project>
