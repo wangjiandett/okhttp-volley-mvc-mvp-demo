@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 20015 MaiNaEr All rights reserved
  */
-package com.jiange.okhttp.okhttp.demo;
+package com.jiange.okhttp.okhttp.demo.controller;
 
 import com.jiange.okhttp.okhttp.BaseResponse;
 import com.jiange.okhttp.okhttp.OKBaseResponse;
@@ -31,7 +31,7 @@ public abstract class MyAppController<Listener> extends OKHttpController<Listene
         public boolean onInterceptor(OKBaseResponse response) {
             if (response instanceof BaseResponse) {
                 BaseResponse resp = (BaseResponse) response;
-                if (!"101".equals(resp.getStatus())) {
+                if (!"101".equals(resp.getStatus())) {//101表示成功
                     // 主线程中调用onError,不能直接调用onError
                     sendMessage(resp.getMessage(), ERROR_CODE);
                     return true;

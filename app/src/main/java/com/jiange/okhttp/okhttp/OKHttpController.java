@@ -112,6 +112,7 @@ public abstract class OKHttpController<Listener> {
                     bindBody(url, builder).delete();
                     break;
                 case Method.PUT:
+                    // 待测
                     requestBody = RequestBody.create(MEDIA_TYPE_PLAIN, getBody(input));
                     bindBody(url, builder).put(requestBody);
                     break;
@@ -119,8 +120,13 @@ public abstract class OKHttpController<Listener> {
                     bindBody(url, builder).head();
                     break;
                 case Method.PATCH:
+                    // 待测
                     requestBody = RequestBody.create(MEDIA_TYPE_PLAIN, getBody(input));
                     builder.url(url.getUrl()).patch(requestBody);
+                    break;
+                default:
+                    // 获取请求体
+                    bindBody(url, builder).get();
                     break;
             }
 
@@ -133,6 +139,7 @@ public abstract class OKHttpController<Listener> {
             mCall.enqueue(this);
         }
 
+        // 拼接get请求参数
         private Request.Builder bindBody(IUrl url, Request.Builder builder) {
             String body = getBody(input);
             url.setQuery(body);
@@ -156,7 +163,7 @@ public abstract class OKHttpController<Listener> {
             }
         }
 
-        private void convertData(Response response) {
+        protected void convertData(Response response) {
             Output out = null;
             String body = null;
             try {
@@ -193,7 +200,7 @@ public abstract class OKHttpController<Listener> {
                 sendMessage(e.getMessage(), ERROR_CODE);
                 return;
             } catch (JsonSyntaxException e) {
-                sendMessage("数据解析失败", ERROR_CODE);
+                sendMessage(e.getMessage(), ERROR_CODE);
                 return;
             } catch (Exception e) {
                 sendMessage(e.getMessage(), ERROR_CODE);
@@ -201,6 +208,12 @@ public abstract class OKHttpController<Listener> {
             }
         }
 
+        /**
+         * 数据加载完成或失败
+         *
+         * @param obj 加载到的数据或失败信息
+         * @param what
+         */
         protected void sendMessage(Object obj, int what) {
             Message msg = Message.obtain();
             msg.obj = obj;
@@ -232,6 +245,12 @@ public abstract class OKHttpController<Listener> {
             return "UTF-8";
         }
 
+        /**
+         * 获取post请求body
+         *
+         * @param input
+         * @return
+         */
         protected RequestBody postBody(Input input) {
             HashMap<String, ?> map = OkStringUtils.postRequestParam(input, getParamsEncoding());
             FormBody.Builder formBuilder = new FormBody.Builder();

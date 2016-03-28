@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 20015 MaiNaEr All rights reserved
  */
-package com.jiange.okhttp.okhttp.demo;
+package com.jiange.okhttp.okhttp.demo.model;
 
 import java.io.Serializable;
 

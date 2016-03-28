@@ -1,8 +1,12 @@
 /*
  * Copyright (C) 20015 MaiNaEr All rights reserved
  */
-package com.jiange.okhttp.okhttp.demo;
+package com.jiange.okhttp.okhttp.demo.controller;
 
+import com.jiange.okhttp.okhttp.demo.model.LoadRequest;
+import com.jiange.okhttp.okhttp.demo.model.LoadResponse;
+import com.jiange.okhttp.okhttp.demo.model.PersonRequest;
+import com.jiange.okhttp.okhttp.demo.model.PersonResponse;
 import com.jiange.okhttp.volley.URLConst;
 
 import java.util.List;

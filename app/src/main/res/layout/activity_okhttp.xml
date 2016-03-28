@@ -26,9 +26,23 @@
         android:text="upload"
         android:textColor="@android:color/holo_red_dark"/>
 
+    <Button
+        android:id="@+id/download"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="download"
+        android:textColor="@android:color/holo_red_dark"/>
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/holo_red_dark"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+
 </LinearLayout>

@@ -5,11 +5,18 @@ package com.jiange.okhttp.okhttp.demo;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jiange.okhttp.flux.ui.BaseActivity;
 import com.jiange.okhttp.okhttp.R;
+import com.jiange.okhttp.okhttp.demo.controller.LoadController;
+import com.jiange.okhttp.okhttp.demo.controller.OKDownController;
+import com.jiange.okhttp.okhttp.demo.controller.UploadController;
+import com.jiange.okhttp.okhttp.demo.model.LoadResponse;
+import com.jiange.okhttp.okhttp.demo.model.PersonResponse;
+import com.jiange.okhttp.okhttp.demo.model.UploadResponse;
 
 import java.io.File;
 import java.util.List;
@@ -23,14 +30,18 @@ import cn.ieclipse.af.util.DialogUtils;
  * @date 2016/3/23.
  */
 public class OkHttpActivity extends BaseActivity implements LoadController.LoadListener,
-    UploadController.UploadListener {
+    UploadController.UploadListener, OKDownController.DownLoadListener {
 
     LoadController controller;
     UploadController upController;
+    OKDownController downController;
     private Button mGet;
     private Button mPost;
     private Button mUpload;
+    private Button mDownload;
+
     private TextView mTextView;
+    ProgressBar mProgressBar;
 
     @Override
     protected int getContentLayout() {
@@ -44,9 +55,13 @@ public class OkHttpActivity extends BaseActivity implements LoadController.LoadL
         mGet = (Button) findViewById(R.id.get);
         mPost = (Button) findViewById(R.id.post);
         mUpload = (Button) findViewById(R.id.upload);
+        mDownload = (Button) findViewById(R.id.download);
 
         mTextView = (TextView) findViewById(R.id.textView);
-        setOnClickListener(mPost, mGet, mUpload);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+
+        setOnClickListener(mPost, mGet, mUpload, mDownload);
     }
 
     @Override
@@ -54,6 +69,7 @@ public class OkHttpActivity extends BaseActivity implements LoadController.LoadL
         super.initData();
         controller = new LoadController(this);
         upController = new UploadController(this);
+        downController = new OKDownController(this);
     }
 
     @Override
@@ -67,6 +83,9 @@ public class OkHttpActivity extends BaseActivity implements LoadController.LoadL
         }
         else if (v == mUpload) {
             upController.upload(new File("/storage/emulated/0/DCIM/.thumbnails/1458645728960.jpg"));
+        }
+        else if (v == mDownload) {
+            downController.downLoad();
         }
     }
 
@@ -92,11 +111,25 @@ public class OkHttpActivity extends BaseActivity implements LoadController.LoadL
 
     @Override
     public void loadSuccess(UploadResponse uploadResponse) {
-        Toast.makeText(this, "success = "+uploadResponse.baseurl, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "upload success = " + uploadResponse.baseurl, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void loadFail(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void inDownLoaProgress(float progress, long total) {
+        int pro = (int) (progress * 100);
+        android.util.Log.e("eee", pro + "");
+
+        mProgressBar.setProgress(pro);
+    }
+
+    @Override
+    public void onDownLoaSuccess(File file) {
+        Toast.makeText(this, "download success = " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+
     }
 }

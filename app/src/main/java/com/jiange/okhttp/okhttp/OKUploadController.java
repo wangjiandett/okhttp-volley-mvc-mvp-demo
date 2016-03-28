@@ -4,6 +4,8 @@
 package com.jiange.okhttp.okhttp;
 
 import java.io.File;
+import java.net.FileNameMap;
+import java.net.URLConnection;
 import java.util.HashMap;
 
 import okhttp3.Headers;
@@ -32,15 +34,17 @@ public abstract class OKUploadController<Listener> extends OKHttpController<List
     protected abstract class BaseUpLoadTask<Output> extends LoadTask<File, Output> {
 
         @Override
-        protected RequestBody postBody(File input) {
+        protected RequestBody postBody(File file) {
             // 设置请求体
-            MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-            RequestBody body = MultipartBody.create(MEDIA_TYPE_PNG, input);
-
             MultipartBody.Builder builder = new MultipartBody.Builder();
             builder.setType(MultipartBody.FORM);
-            builder.addFormDataPart("file", input.getName(), body);
-
+            // 封装文件请求体
+            if (file != null && file.exists()) {
+                String filename = file.getName();
+                MediaType mediaType = MediaType.parse(guessMimeType(filename));
+                RequestBody fileBody = RequestBody.create(mediaType, file);
+                builder.addFormDataPart("file", filename, fileBody);
+            }
             // 封装请求参数
             HashMap<String, String> params = new HashMap<>();
             addParams(params);
@@ -52,6 +56,15 @@ public abstract class OKUploadController<Listener> extends OKHttpController<List
             }
 
             return builder.build();
+        }
+
+        private String guessMimeType(String filename) {
+            FileNameMap fileNameMap = URLConnection.getFileNameMap();
+            String contentTypeFor = fileNameMap.getContentTypeFor(filename);
+            if (contentTypeFor == null) {
+                contentTypeFor = "application/octet-stream";
+            }
+            return contentTypeFor;
         }
 
         /**

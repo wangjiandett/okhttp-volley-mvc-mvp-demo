@@ -32,7 +32,7 @@ public final class URLConst {
     }
 
 
-    public static final String BASE = "http://app.mainaer.com/api.php/2.2.0/";//http://test.mainaer.com/api.php/2
+    public static final String BASE = "http://msoftdl.360.cn/mobilesafe/shouji360/360safesis/360StrongBox_1.0.9.1008.apk";//http://test.mainaer.com/api.php/2
     // .2.0/";
     public interface User {
 
@@ -40,6 +40,7 @@ public final class URLConst {
 
         Url DATAPIE = new Url("dataPie").get();
         Url PERSONARMORY = new Url("personalArmory").post();
+        Url download = new Url("").get();
     }
 
     public static class Url implements IUrl {

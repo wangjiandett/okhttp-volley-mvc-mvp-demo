@@ -1,9 +1,10 @@
 /*
  * Copyright (C) 20015 MaiNaEr All rights reserved
  */
-package com.jiange.okhttp.okhttp.demo;
+package com.jiange.okhttp.okhttp.demo.controller;
 
 import com.jiange.okhttp.okhttp.OKUploadController;
+import com.jiange.okhttp.okhttp.demo.model.UploadResponse;
 import com.jiange.okhttp.volley.URLConst;
 
 import java.io.File;
